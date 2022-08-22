@@ -132,8 +132,13 @@ image_manip_script.setScript("""
              #tmp=aprilTagData.size()
              #tmp=aprilTagData[0]
              #node.warn(f"tmp {tmp}
-             for aprilTag in aprilTagData.aprilTags:
-                node.warn("d3")
+             #for aprilTag in aprilTagData.aprilTags:
+             #   node.warn("d3")
+             for i, aprilTag in enumerate(aprilTagData.aprilTags):
+                node.warn("d4")
+                #topLeft = aprilTag.topLeft  #ko to access corners data
+                #node.warn(f"d5 topLeft {topLeft})
+                
              
                      
     """)
