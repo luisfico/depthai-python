@@ -117,20 +117,7 @@ image_manip_script.setScript("""
         aprilTagData = node.io['aprilTagData'].tryGet()
         
         node.warn("d1")
-        sync_msgs = get_msgs()
-        if sync_msgs is not None:
-            node.warn("d2")
-            img = sync_msgs['video']
-            aprilCorners = sync_msgs['aprilTagData']
-            for aprilTag in aprilCorners:
-                topLeft = aprilTag.topLeft
-                topRight = aprilTag.topRight
-                bottomRight = aprilTag.bottomRight
-                bottomLeft = aprilTag.bottomLeft
-                node.warn(f"UINT8 topLeftX {topLeft.x}, topRightY {topLeft.y}, bottomRightX {bottomRight.x}, topRightY {topRight.y}")
-                cfg.setCropRect(int(topLeft.x), int(topLeft.y), int(bottomRight.x), int(bottomRight.y))
-                node.io['manip_cfg'].send(cfg)
-                node.io['manip_img'].send(img)
+        
     """)
 
 roi_manip = pipeline.create(dai.node.ImageManip)
