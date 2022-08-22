@@ -132,8 +132,8 @@ image_manip_script.setScript("""
              #tmp=aprilTagData.size()
              #tmp=aprilTagData[0]
              #node.warn(f"tmp {tmp}
-             #for aprilTag in aprilTagData.aprilTags:
-             #   node.warn("d3")
+             for aprilTag in aprilTagData.aprilTags:
+                node.warn("d3")
              
                      
     """)
