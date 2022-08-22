@@ -112,13 +112,13 @@ image_manip_script.setScript("""
 
     cfg = ImageManipConfig()
     while True:
-        time.sleep(0.001) # Avoid lazy looping
+        time.sleep(0.1) # Avoid lazy looping
 
-        #video = node.io['video'].tryGet()
-        #aprilTagData = node.io['aprilTagData'].tryGet()
+        video = node.io['video'].tryGet()
+        aprilTagData = node.io['aprilTagData'].tryGet()
         
-        video = node.io['video'].get()
-        aprilTagData = node.io['aprilTagData'].get()
+        #video = node.io['video'].get()
+        #aprilTagData = node.io['aprilTagData'].get()
         
         node.warn("d1")
         frameReady=(video is not None)
@@ -126,8 +126,14 @@ image_manip_script.setScript("""
         dataReady= frameReady and cornersReady
         node.warn(f"frameReady {frameReady}, cornersReady {cornersReady}, dataReady {dataReady}")
         if dataReady:
-             node.warn("debugTmp4")
+             node.warn("d2")
              #cfg = ImageManipConfig()
+             #node.io['manip_img'].send(video)  #ko pass video4K
+             #tmp=aprilTagData.size()
+             #tmp=aprilTagData[0]
+             #node.warn(f"tmp {tmp}
+             #for aprilTag in aprilTagData.aprilTags:
+             #   node.warn("d3")
              
                      
     """)
