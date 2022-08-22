@@ -42,7 +42,7 @@ camRgb.video.link(manip.inputImage)
 manip.out.link(aprilTag.inputImage)
 aprilTag.out.link(xoutAprilTag.input) # #detected marker corners 
 
-camRgb.preview.link(image_manip_script.inputs['preview'])
+camRgb.video.link(image_manip_script.inputs['video'])
 aprilTag.out.link(image_manip_script.inputs['aprilTagData'])  
 
 
@@ -113,12 +113,14 @@ image_manip_script.setScript("""
     while True:
         time.sleep(0.001) # Avoid lazy looping
 
-        preview = node.io['preview'].tryGet()
+        video = node.io['video'].tryGet()
         aprilTagData = node.io['aprilTagData'].tryGet()
         
+        node.warn("d1")
         sync_msgs = get_msgs()
         if sync_msgs is not None:
-            img = sync_msgs['preview']
+            node.warn("d2")
+            img = sync_msgs['video']
             aprilCorners = sync_msgs['aprilTagData']
             for aprilTag in aprilCorners:
                 topLeft = aprilTag.topLeft
