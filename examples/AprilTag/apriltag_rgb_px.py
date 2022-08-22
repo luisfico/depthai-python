@@ -117,7 +117,12 @@ image_manip_script.setScript("""
         aprilTagData = node.io['aprilTagData'].tryGet()
         
         node.warn("d1")
-        
+        frameReady=(video is not None)
+        cornersReady=(aprilTagData is not None)
+        dataReady= frameReady and cornersReady
+        node.warn(f"frameReady {frameReady}, cornersReady {cornersReady}, dataReady {dataReady}")
+        if dataReady:
+             node.warn("debugTmp4")        
     """)
 
 roi_manip = pipeline.create(dai.node.ImageManip)
