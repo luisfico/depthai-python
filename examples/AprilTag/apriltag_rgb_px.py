@@ -23,8 +23,9 @@ xoutAprilTag.setStreamName("aprilTagData")
 xoutAprilTagImage.setStreamName("aprilTagImage")
 
 # Properties
-#camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P) #12 FPS
-camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_4_K)     # 7 FPS  
+#camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_720_P) # FPS
+camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P) #12 FPS
+#camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_4_K)     # 7 FPS  
 camRgb.setBoardSocket(dai.CameraBoardSocket.RGB)
 
 manip.initialConfig.setResize(480, 270)
@@ -95,13 +96,12 @@ end_xout = pipeline.create(dai.node.XLinkOut)
 end_xout.setStreamName("end")
 image_manip_script.outputs['manip_cfg'].link(end_xout.input)
 
-
 """
+#Add ROI manip
 roi_manip = pipeline.create(dai.node.ImageManip)
 #roi_manip.setWaitForConfigInput(True)
 image_manip_script.outputs['manip_cfg'].link(roi_manip.inputConfig)
 manip.out.link(roi_manip.inputImage)
-
 roi_xout = pipeline.create(dai.node.XLinkOut)
 roi_xout.setStreamName("roi")
 roi_manip.out.link(roi_xout.input)
