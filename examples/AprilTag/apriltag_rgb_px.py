@@ -59,6 +59,47 @@ aprilTagConfig.quadThresholds.minWhiteBlackDiff = 5
 aprilTagConfig.quadThresholds.deglitch = False
 aprilTag.initialConfig.set(aprilTagConfig)
 
+
+
+image_manip_script.setScript("""
+    import time
+    
+    cfg = ImageManipConfig()
+    while True:
+        time.sleep(0.1) # Avoid lazy looping
+
+        aprilTagData = node.io['aprilTagData'].tryGet()
+        cornersReady=(aprilTagData is not None)
+        node.warn(f"cornersReady {cornersReady}")
+        if cornersReady:
+             node.warn("d2")
+             for i, aprilTag in enumerate(aprilTagData.aprilTags):
+                node.warn("d4")
+                topLeft = aprilTag.topLeft
+                topRight = aprilTag.topRight
+                bottomRight = aprilTag.bottomRight
+                bottomLeft = aprilTag.bottomLeft
+                
+                node.warn(f"d51 topLeftX    {str(topLeft.x)}, Y {str(topLeft.y)}")
+                node.warn(f"d52 topRight    {str(topRight.x)}, Y {str(topRight.y)}")
+                node.warn(f"d53 bottomRight {str(bottomRight.x)}, Y {str(bottomRight.y)}")
+                node.warn(f"d54 bottomLeft  {str(bottomLeft.x)}, Y {str(bottomLeft.y)}")
+                
+                #cfg.setCropRect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y)
+                # node.warn(f"Sending {i + 1}. det. Seq {seq}. Det {det.xmin}, {det.ymin}, {det.xmax}, {det.ymax}")
+                #cfg.setResize(62, 62)
+                #cfg.setKeepAspectRatio(False)
+                #node.io['manip_cfg'].send(cfg)
+                   
+    """)
+end_xout = pipeline.create(dai.node.XLinkOut)
+end_xout.setStreamName("end")
+
+image_manip_script.outputs['manip_cfg'].link(end_xout.input)
+
+
+
+
 # Connect to device and start pipeline
 with dai.Device(pipeline) as device:
 
