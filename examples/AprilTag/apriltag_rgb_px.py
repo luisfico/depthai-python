@@ -136,10 +136,24 @@ image_manip_script.setScript("""
              #   node.warn("d3")
              for i, aprilTag in enumerate(aprilTagData.aprilTags):
                 node.warn("d4")
-                tl = int(aprilTag.topLeft.x)  #ko to access corners data
-                tl = str(tl)
-                node.warn(f"d55 marker corner topLeft {tl}")
+                topLeft = aprilTag.topLeft
+                topRight = aprilTag.topRight
+                bottomRight = aprilTag.bottomRight
+                bottomLeft = aprilTag.bottomLeft
                 
+                node.warn(f"d51 topLeftX    {str(topLeft.x)}, Y {str(topLeft.y)}")
+                node.warn(f"d52 topRight    {str(topRight.x)}, Y {str(topRight.y)}")
+                node.warn(f"d53 bottomRight {str(bottomRight.x)}, Y {str(bottomRight.y)}")
+                node.warn(f"d54 bottomLeft  {str(bottomLeft.x)}, Y {str(bottomLeft.y)}")
+
+                
+                #cfg.setCropRect(det.xmin, det.ymin, det.xmax, det.ymax)
+                # node.warn(f"Sending {i + 1}. det. Seq {seq}. Det {det.xmin}, {det.ymin}, {det.xmax}, {det.ymax}")
+                #cfg.setResize(62, 62)
+                #cfg.setKeepAspectRatio(False)
+                #node.io['manip_cfg'].send(cfg)
+                #node.io['manip_img'].send(img)
+
              
                      
     """)
