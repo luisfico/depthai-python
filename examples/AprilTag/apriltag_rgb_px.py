@@ -1,5 +1,6 @@
 # RUN :                                      python apriltag_rgb_px.py  
 # RUN with graph node:   pipeline_graph run "python apriltag_rgb_px.py"  
+# DEBUG script :         DEPTHAI_LEVEL=debug python3 apriltag_rgb_px.py 
 
 #!/usr/bin/env python3
 
