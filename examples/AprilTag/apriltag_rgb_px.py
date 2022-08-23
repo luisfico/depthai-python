@@ -147,11 +147,11 @@ image_manip_script.setScript("""
                 node.warn(f"d54 bottomLeft  {str(bottomLeft.x)}, Y {str(bottomLeft.y)}")
 
                 
-                #cfg.setCropRect(det.xmin, det.ymin, det.xmax, det.ymax)
+                cfg.setCropRect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y)
                 # node.warn(f"Sending {i + 1}. det. Seq {seq}. Det {det.xmin}, {det.ymin}, {det.xmax}, {det.ymax}")
                 #cfg.setResize(62, 62)
                 #cfg.setKeepAspectRatio(False)
-                #node.io['manip_cfg'].send(cfg)
+                node.io['manip_cfg'].send(cfg)
                 #node.io['manip_img'].send(img)
 
              
