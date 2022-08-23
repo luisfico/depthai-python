@@ -136,8 +136,9 @@ image_manip_script.setScript("""
              #   node.warn("d3")
              for i, aprilTag in enumerate(aprilTagData.aprilTags):
                 node.warn("d4")
-                #topLeft = aprilTag.topLeft  #ko to access corners data
-                #node.warn(f"d5 topLeft {topLeft})
+                tl = int(aprilTag.topLeft.x)  #ko to access corners data
+                tl = str(tl)
+                #node.warn(f"d5 {tl}")
                 
              
                      
