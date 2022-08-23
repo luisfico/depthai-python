@@ -138,7 +138,7 @@ image_manip_script.setScript("""
                 node.warn("d4")
                 tl = int(aprilTag.topLeft.x)  #ko to access corners data
                 tl = str(tl)
-                #node.warn(f"d5 {tl}")
+                node.warn(f"d55 marker corner topLeft {tl}")
                 
              
                      
