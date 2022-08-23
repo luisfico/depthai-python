@@ -14,7 +14,8 @@ pipeline = dai.Pipeline()
 camRgb = pipeline.create(dai.node.ColorCamera)
 aprilTag = pipeline.create(dai.node.AprilTag)
 manip = pipeline.create(dai.node.ImageManip)
-
+image_manip_script = pipeline.create(dai.node.Script) #config to return luminances and corners
+  
 xoutAprilTag = pipeline.create(dai.node.XLinkOut)
 xoutAprilTagImage = pipeline.create(dai.node.XLinkOut)
 
@@ -36,6 +37,9 @@ aprilTag.passthroughInputImage.link(xoutAprilTagImage.input)
 camRgb.video.link(manip.inputImage)
 manip.out.link(aprilTag.inputImage)
 aprilTag.out.link(xoutAprilTag.input)
+
+aprilTag.out.link(image_manip_script.inputs['aprilTagData'])  
+
 # always take the latest frame as apriltag detections are slow
 aprilTag.inputImage.setBlocking(False)
 aprilTag.inputImage.setQueueSize(1)
