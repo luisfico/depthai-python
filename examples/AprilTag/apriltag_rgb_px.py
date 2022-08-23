@@ -99,7 +99,7 @@ image_manip_script.outputs['manip_cfg'].link(end_xout.input)
 
 
 
-"""
+
 #Add ROI manip
 roi_manip = pipeline.create(dai.node.ImageManip)
 #roi_manip.setWaitForConfigInput(True)
@@ -112,7 +112,7 @@ aprilTag.passthroughInputImage.link(roi_manip.inputImage)
 roi_xout = pipeline.create(dai.node.XLinkOut)
 roi_xout.setStreamName("roi")
 roi_manip.out.link(roi_xout.input)
-"""
+
 
 
 # Connect to device and start pipeline
@@ -121,11 +121,8 @@ with dai.Device(pipeline) as device:
     # Output queue will be used to get the mono frames from the outputs defined above
     manipQueue = device.getOutputQueue("aprilTagImage", 8, False)
     aprilTagQueue = device.getOutputQueue("aprilTagData", 8, False)
-"""
-   auto qGray = device.getOutputQueue("gray_preview", 1, true);
-    auto qApril = device.getOutputQueue("april", 1, false);
-    auto qMarkerRoi = device.getOutputQueue("marker", 1, false);
-"""
+    #manipQueue = device.getOutputQueue("aprilTagImage", 1, True)
+    #aprilTagQueue = device.getOutputQueue("aprilTagData", 1, True)
     color = (0, 255, 0)
 
     startTime = time.monotonic()
