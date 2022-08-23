@@ -134,6 +134,7 @@ image_manip_script.setScript("""
              #node.warn(f"tmp {tmp}
              #for aprilTag in aprilTagData.aprilTags:
              #   node.warn("d3")
+             img=video
              for i, aprilTag in enumerate(aprilTagData.aprilTags):
                 node.warn("d4")
                 topLeft = aprilTag.topLeft
@@ -152,7 +153,9 @@ image_manip_script.setScript("""
                 #cfg.setResize(62, 62)
                 #cfg.setKeepAspectRatio(False)
                 node.io['manip_cfg'].send(cfg)
-                #node.io['manip_img'].send(img)
+                node.io['manip_img'].send(img) #[ImageManip(6)] [error] Output image is bigger (481413120B) than maximum frame size specified in properties (1048576B) - skipping frame.
+Please use the setMaxOutputFrameSize API to explicitly config the [maximum] output size.
+                
 
              
                      
