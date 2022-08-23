@@ -1,6 +1,6 @@
-# RUN :                                      python3 feature_detector.py  
-# RUN with graph node:   pipeline_graph run "python3 feature_detector.py"  
-# DEBUG script :         DEPTHAI_LEVEL=debug python3 feature_detector.py 
+# RUN :                                      python3 feature_detector_px.py  
+# RUN with graph node:   pipeline_graph run "python3 feature_detector_px.py"  
+# DEBUG script :         DEPTHAI_LEVEL=debug python3 feature_detector_px.py 
 
 #!/usr/bin/env python3
 
