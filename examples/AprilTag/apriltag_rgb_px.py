@@ -93,10 +93,19 @@ image_manip_script.setScript("""
     """)
 end_xout = pipeline.create(dai.node.XLinkOut)
 end_xout.setStreamName("end")
-
 image_manip_script.outputs['manip_cfg'].link(end_xout.input)
 
 
+"""
+roi_manip = pipeline.create(dai.node.ImageManip)
+#roi_manip.setWaitForConfigInput(True)
+image_manip_script.outputs['manip_cfg'].link(roi_manip.inputConfig)
+manip.out.link(roi_manip.inputImage)
+
+roi_xout = pipeline.create(dai.node.XLinkOut)
+roi_xout.setStreamName("roi")
+roi_manip.out.link(roi_xout.input)
+"""
 
 
 # Connect to device and start pipeline
