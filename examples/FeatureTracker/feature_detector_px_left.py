@@ -19,10 +19,16 @@ xoutPassthroughFrameLeft = pipeline.create(dai.node.XLinkOut)
 xoutTrackedFeaturesLeft = pipeline.create(dai.node.XLinkOut)
 #xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
 
+maxFrameSize = monoLeft.getResolutionHeight() * monoLeft.getResolutionWidth() * 3  #??
+
 #Apply roi
 manip1 = pipeline.create(dai.node.ImageManip)
-manip1.initialConfig.setCropRect(0, 0, 0.5, 1)
-#manip1.setMaxOutputFrameSize(maxFrameSize)
+
+#Simulation init marker roi
+manip1.initialConfig.setCropRect(0, 0.7, 0.3, 1)
+#manip1.initialConfig.setCropRect(0, 0.5, 0.5, 1)
+#manip1.initialConfig.setCropRect(0, 0, 0.5, 1) #original
+manip1.setMaxOutputFrameSize(maxFrameSize)
 monoLeft.out.link(manip1.inputImage)
 
 xoutPassthroughFrameLeft.setStreamName("passthroughFrameLeft")
@@ -37,7 +43,9 @@ monoLeft.setBoardSocket(dai.CameraBoardSocket.LEFT)
 featureTrackerLeft.initialConfig.setMotionEstimator(False)
 
 # Linking
-monoLeft.out.link(featureTrackerLeft.inputImage)
+#monoLeft.out.link(featureTrackerLeft.inputImage)
+manip1.out.link(featureTrackerLeft.inputImage)
+
 featureTrackerLeft.passthroughInputImage.link(xoutPassthroughFrameLeft.input)
 featureTrackerLeft.outputFeatures.link(xoutTrackedFeaturesLeft.input)
 #xinTrackedFeaturesConfig.out.link(featureTrackerLeft.inputConfig)
