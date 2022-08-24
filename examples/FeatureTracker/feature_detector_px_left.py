@@ -1,6 +1,6 @@
-# RUN :                                      python3 feature_detector_px.py  
-# RUN with graph node:   pipeline_graph run "python3 feature_detector_px.py"  
-# DEBUG script :         DEPTHAI_LEVEL=debug python3 feature_detector_px.py 
+# RUN :                                      python3 feature_detector_px_left.py  
+# RUN with graph node:   pipeline_graph run "python3 feature_detector_px_left.py"  
+# DEBUG script :         DEPTHAI_LEVEL=debug python3 feature_detector_px_left.py 
 
 #!/usr/bin/env python3
 
@@ -17,11 +17,11 @@ featureTrackerLeft = pipeline.create(dai.node.FeatureTracker)
 
 xoutPassthroughFrameLeft = pipeline.create(dai.node.XLinkOut)
 xoutTrackedFeaturesLeft = pipeline.create(dai.node.XLinkOut)
-xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
+#xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
 
 xoutPassthroughFrameLeft.setStreamName("passthroughFrameLeft")
 xoutTrackedFeaturesLeft.setStreamName("trackedFeaturesLeft")
-xinTrackedFeaturesConfig.setStreamName("trackedFeaturesConfig")
+#xinTrackedFeaturesConfig.setStreamName("trackedFeaturesConfig")
 
 # Properties
 monoLeft.setResolution(dai.MonoCameraProperties.SensorResolution.THE_400_P)
@@ -34,7 +34,7 @@ featureTrackerLeft.initialConfig.setMotionEstimator(False)
 monoLeft.out.link(featureTrackerLeft.inputImage)
 featureTrackerLeft.passthroughInputImage.link(xoutPassthroughFrameLeft.input)
 featureTrackerLeft.outputFeatures.link(xoutTrackedFeaturesLeft.input)
-xinTrackedFeaturesConfig.out.link(featureTrackerLeft.inputConfig)
+#xinTrackedFeaturesConfig.out.link(featureTrackerLeft.inputConfig)
 
 featureTrackerConfig = featureTrackerLeft.initialConfig.get()
 
@@ -47,7 +47,7 @@ with dai.Device(pipeline) as device:
     passthroughImageLeftQueue = device.getOutputQueue("passthroughFrameLeft", 8, False)
     outputFeaturesLeftQueue = device.getOutputQueue("trackedFeaturesLeft", 8, False)
 
-    inputFeatureTrackerConfigQueue = device.getInputQueue("trackedFeaturesConfig")
+    #inputFeatureTrackerConfigQueue = device.getInputQueue("trackedFeaturesConfig")
 
     leftWindowName = "left"
 
@@ -79,6 +79,6 @@ with dai.Device(pipeline) as device:
                 featureTrackerConfig.cornerDetector.type = dai.FeatureTrackerConfig.CornerDetector.Type.HARRIS
                 print("Switching to Harris")
 
-            cfg = dai.FeatureTrackerConfig()
-            cfg.set(featureTrackerConfig)
-            inputFeatureTrackerConfigQueue.send(cfg)
+            #cfg = dai.FeatureTrackerConfig()
+            #cfg.set(featureTrackerConfig)
+            #inputFeatureTrackerConfigQueue.send(cfg)
