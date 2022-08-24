@@ -19,6 +19,12 @@ xoutPassthroughFrameLeft = pipeline.create(dai.node.XLinkOut)
 xoutTrackedFeaturesLeft = pipeline.create(dai.node.XLinkOut)
 #xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
 
+#Apply roi
+manip1 = pipeline.create(dai.node.ImageManip)
+manip1.initialConfig.setCropRect(0, 0, 0.5, 1)
+#manip1.setMaxOutputFrameSize(maxFrameSize)
+monoLeft.out.link(manip1.inputImage)
+
 xoutPassthroughFrameLeft.setStreamName("passthroughFrameLeft")
 xoutTrackedFeaturesLeft.setStreamName("trackedFeaturesLeft")
 #xinTrackedFeaturesConfig.setStreamName("trackedFeaturesConfig")
@@ -38,6 +44,10 @@ featureTrackerLeft.outputFeatures.link(xoutTrackedFeaturesLeft.input)
 
 featureTrackerConfig = featureTrackerLeft.initialConfig.get()
 
+xout1 = pipeline.create(dai.node.XLinkOut)
+xout1.setStreamName('out1')
+manip1.out.link(xout1.input)
+
 print("Press 's' to switch between Harris and Shi-Thomasi corner detector!")
 
 # Connect to device and start pipeline
@@ -47,6 +57,8 @@ with dai.Device(pipeline) as device:
     passthroughImageLeftQueue = device.getOutputQueue("passthroughFrameLeft", 8, False)
     outputFeaturesLeftQueue = device.getOutputQueue("trackedFeaturesLeft", 8, False)
 
+    q1 = device.getOutputQueue(name="out1", maxSize=4, blocking=False)
+    
     #inputFeatureTrackerConfigQueue = device.getInputQueue("trackedFeaturesConfig")
 
     leftWindowName = "left"
@@ -64,6 +76,9 @@ with dai.Device(pipeline) as device:
 
         trackedFeaturesLeft = outputFeaturesLeftQueue.get().trackedFeatures
         drawFeatures(leftFrame, trackedFeaturesLeft)
+        
+        if q1.has():
+            cv2.imshow("Tile 1", q1.get().getCvFrame())
 
         # Show the frame
         cv2.imshow(leftWindowName, leftFrame)
