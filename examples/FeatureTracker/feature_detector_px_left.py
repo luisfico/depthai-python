@@ -76,6 +76,22 @@ with dai.Device(pipeline) as device:
         circleRadius = 2
         for feature in features:
             cv2.circle(frame, (int(feature.position.x), int(feature.position.y)), circleRadius, pointColor, -1, cv2.LINE_AA, 0)
+    
+    def boundingFeatures(features):
+        minX=100000
+        minY=100000
+        maxX=0
+        maxY=0
+        for feature in features:
+            if(int(feature.position.x)<minX):
+                minX=int(feature.position.x)
+            if(int(feature.position.y)<minY):
+                minY=int(feature.position.y)
+            if(int(feature.position.x)>maxX):
+                maxX=int(feature.position.x)
+            if(int(feature.position.y)>maxY):
+                maxY=int(feature.position.y)
+        return minX,minY,maxX,maxY 
 
     while True:
         inPassthroughFrameLeft = passthroughImageLeftQueue.get()
@@ -84,7 +100,11 @@ with dai.Device(pipeline) as device:
 
         trackedFeaturesLeft = outputFeaturesLeftQueue.get().trackedFeatures
         drawFeatures(leftFrame, trackedFeaturesLeft)
-        
+
+        #TODO: set new roi from detected features
+        minX,minY,maxX,maxY = boundingFeatures(trackedFeaturesLeft)
+        print("features roi : "+str(minX)+" ; "+str(minY)+" ; "+str(maxX)+" ; "+str(maxY))
+
         if q1.has():
             cv2.imshow("Tile 1", q1.get().getCvFrame())
 
