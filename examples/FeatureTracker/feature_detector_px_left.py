@@ -1,3 +1,13 @@
+"""
+TODO: add roi maker node (ImageManip)
+    In th script node
+    1) at the beguining stock features marker, detected in the init roi
+    2) then tracking just these features
+    3) update bounding box of the followed features 
+    4) with this new bounding box the update roi (new pos roi=pre pos roi + movement bounding box ) 
+"""
+
+
 # RUN :                                      python3 feature_detector_px_left.py  
 # RUN with graph node:   pipeline_graph run "python3 feature_detector_px_left.py"  
 # DEBUG script :         DEPTHAI_LEVEL=debug python3 feature_detector_px_left.py 

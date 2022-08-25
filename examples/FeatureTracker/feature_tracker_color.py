@@ -1,3 +1,12 @@
+"""
+TODO: add roi maker node (ImageManip)
+    In th script node
+    1) at the beguining stock features marker, detected in the init roi
+    2) then tracking just these features
+    3) update bounding box of the followed features 
+    4) with this new bounding box the update roi (new pos roi=pre pos roi + movement bounding box ) 
+"""
+
 #!/usr/bin/env python3
 
 import cv2
