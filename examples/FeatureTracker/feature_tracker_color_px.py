@@ -91,6 +91,11 @@ pipeline = dai.Pipeline()
 
 # Define sources and outputs
 colorCam = pipeline.create(dai.node.ColorCamera)
+colorCam.setPreviewSize(1000, 500)
+colorCam.setInterleaved(False)
+maxFrameSize = colorCam.getPreviewHeight() * colorCam.getPreviewWidth() * 3
+
+
 featureTrackerColor = pipeline.create(dai.node.FeatureTracker)
 
 xoutPassthroughFrameColor = pipeline.create(dai.node.XLinkOut)
@@ -98,6 +103,14 @@ xoutTrackedFeaturesColor = pipeline.create(dai.node.XLinkOut)
 xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
 
 
+#Apply roi
+manip1 = pipeline.create(dai.node.ImageManip)
+#Simulation init marker roi
+manip1.initialConfig.setCropRect(0, 0.7, 0.3, 1)
+#manip1.initialConfig.setCropRect(0, 0.5, 0.5, 1)
+#manip1.initialConfig.setCropRect(0, 0, 0.5, 1) #original
+manip1.setMaxOutputFrameSize(maxFrameSize)
+colorCam.video.link(manip1.inputImage)
 
 
 xoutPassthroughFrameColor.setStreamName("passthroughFrameColor")
@@ -110,8 +123,10 @@ colorCam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
 
 if 1:
     colorCam.setIspScale(2,3)
-    colorCam.video.link(featureTrackerColor.inputImage)
-else:
+    #colorCam.video.link(featureTrackerColor.inputImage)
+    manip1.out.link(featureTrackerColor.inputImage)
+
+else: #unused
     colorCam.isp.link(featureTrackerColor.inputImage)
 
 # Linking
@@ -125,6 +140,10 @@ numShaves = 2
 numMemorySlices = 2
 featureTrackerColor.setHardwareResources(numShaves, numMemorySlices)
 featureTrackerConfig = featureTrackerColor.initialConfig.get()
+
+xout1 = pipeline.create(dai.node.XLinkOut)
+xout1.setStreamName('out1')
+manip1.out.link(xout1.input)
 
 print("Press 's' to switch between Lucas-Kanade optical flow and hardware accelerated motion estimation!")
 
