@@ -97,6 +97,7 @@ xinTrackedFeaturesConfig.setStreamName("trackedFeaturesConfig")
 
 # Properties
 colorCam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
+#colorCam.setResolution(dai.ColorCameraProperties.SensorResolution.THE_4_K)  #ko
 
 if 1:
     colorCam.setIspScale(2,3)
