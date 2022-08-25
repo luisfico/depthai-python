@@ -101,7 +101,7 @@ xinTrackedFeaturesConfig = pipeline.create(dai.node.XLinkIn)
 
 
 xoutPassthroughFrameColor.setStreamName("passthroughFrameColor")
-xoutTrackedFeaturesColor.setStreamName("trackedFeaturesColor")
+xoutTrackedFeaturesColor.setStreamName("trackedFeaturesColor") #outputFeatures
 xinTrackedFeaturesConfig.setStreamName("trackedFeaturesConfig")
 
 # Properties
@@ -133,7 +133,7 @@ with dai.Device(pipeline) as device:
 
     # Output queues used to receive the results
     passthroughImageColorQueue = device.getOutputQueue("passthroughFrameColor", 8, False)
-    outputFeaturesColorQueue = device.getOutputQueue("trackedFeaturesColor", 8, False)
+    outputFeaturesColorQueue = device.getOutputQueue("trackedFeaturesColor", 8, False) #outputFeatures
 
     inputFeatureTrackerConfigQueue = device.getInputQueue("trackedFeaturesConfig")
 
